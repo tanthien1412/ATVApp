@@ -29,6 +29,12 @@
         "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
         "android.permission.RECORD_AUDIO",
         "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.FOREGROUND_SERVICE",
         "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
       ],
       "package": "com.tanthien1412.AgriculturalTV"
@@ -76,6 +82,12 @@
         "projectId": "498bfb47-ff23-4ac8-b741-4e5c74101c00"
       }
     },
-    "owner": "tanthien1412"
+    "owner": "tanthien1412",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/498bfb47-ff23-4ac8-b741-4e5c74101c00"
+    }
   }
 }
