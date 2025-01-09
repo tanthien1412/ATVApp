@@ -44,7 +44,7 @@ const SigninScreen = () => {
 
   const [accountState, setAccountState] = useState<SigninParam>(initSignin)
   const [signinError, setSigninError] = useState<SigninError>(initError)
-  const [_, setStoreApp] = useApp()
+  const [storeApp, setStoreApp] = useApp()
 
   const handleSetAccount = <T extends string>(type: AccountField, value: T) => {
     switch (type) {
@@ -110,6 +110,7 @@ const SigninScreen = () => {
       .then(async (userCredential) => {
         try {
           setStoreApp({
+            ...storeApp,
             user: userCredential.user,
             toast: {
               type: 'success',

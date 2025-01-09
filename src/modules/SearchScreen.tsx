@@ -14,18 +14,18 @@ import { router, useLocalSearchParams } from 'expo-router'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useTranslation } from 'react-i18next'
 
-import { Media } from '../types/media'
 import useThemeApp from '../common/hooks/useThemeApp'
-import useFullMedias from '../common/hooks/useFullMedias'
 import useRefreshByUser from '../common/hooks/useRefreshByUser'
 import useRefreshOnFocus from '../common/hooks/useRefreshOnFocus'
+import { useApp } from '../common/context/AppContext'
+import { Media } from '../types/media'
+import { SPACE } from '../common/constants/constants'
+import { opacityToHex } from '../common/utils/utils'
 
 import HeaderBar from '../components/header/HeaderBar'
 import InputStyled from '../components/ui/InputStyled'
 import CircularLoading from '../components/ui/CircularLoading'
 import GradientBottom from '../components/ui/GradientBottom'
-import { opacityToHex } from '../common/utils/utils'
-import { SPACE } from '../common/constants/constants'
 import ItemSub from '../components/items/ItemSub'
 import Pagination from '../components/pagination'
 
@@ -38,7 +38,8 @@ const SearchScreen: FC = () => {
   const { t } = useTranslation()
   const [isPending, startTransition] = useTransition()
 
-  const { data, refetch } = useFullMedias()
+  const [storeApp] = useApp()
+  const { data, refetch } = storeApp
 
   const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch)
   useRefreshOnFocus(refetch)

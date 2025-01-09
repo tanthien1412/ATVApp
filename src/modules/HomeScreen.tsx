@@ -23,13 +23,13 @@ import Animated, {
 } from 'react-native-reanimated'
 import { difference } from 'lodash-es'
 
-import { Media } from '../types/media'
 import useThemeApp from '../common/hooks/useThemeApp'
-import useFullMedias from '../common/hooks/useFullMedias'
-import { blurhash, SPACE, ThreadMobile } from '../common/constants/constants'
-import { findThreadCurrent, opacityToHex } from '../common/utils/utils'
 import useRefreshByUser from '../common/hooks/useRefreshByUser'
 import useRefreshOnFocus from '../common/hooks/useRefreshOnFocus'
+import { Media } from '../types/media'
+import { useApp } from '../common/context/AppContext'
+import { blurhash, SPACE, ThreadMobile } from '../common/constants/constants'
+import { findThreadCurrent, opacityToHex } from '../common/utils/utils'
 
 import Drawer from '../components/navigation/Drawer'
 import HeaderBar from '../components/header/HeaderBar'
@@ -49,7 +49,8 @@ const HomeScreen: FC = () => {
   const { t } = useTranslation()
   const TAB_BAR_HEIGHT = 60
 
-  const { data, isPending, refetch } = useFullMedias()
+  const [storeApp] = useApp()
+  const { data, isPending, refetch } = storeApp
 
   const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch)
   useRefreshOnFocus(refetch)

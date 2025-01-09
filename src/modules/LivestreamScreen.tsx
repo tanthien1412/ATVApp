@@ -7,7 +7,6 @@ import {
   RefreshControl,
   Text,
   ViewToken,
-  Modal,
 } from 'react-native'
 import Animated, {
   Extrapolation,
@@ -23,7 +22,6 @@ import { doc, addDoc, deleteDoc } from 'firebase/firestore'
 
 import { useTranslation } from 'react-i18next'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 
 import useThemeApp from '../common/hooks/useThemeApp'
 import useStreamData from '../common/hooks/useStreamData'
@@ -52,7 +50,7 @@ const LivestreamScreen: FC = () => {
   const [storeApp, setStoreApp] = useApp()
   const { user } = storeApp
   const { t } = useTranslation()
-  const TAB_BAR_HEIGHT = useBottomTabBarHeight()
+  const TAB_BAR_HEIGHT = 60
 
   const active = useSharedValue(false)
   const progress = useDerivedValue(() => {

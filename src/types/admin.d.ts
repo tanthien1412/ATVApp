@@ -1,4 +1,5 @@
 import { User } from 'firebase/auth'
+import { Media } from './media'
 // export type Account = {
 //   id: string
 //   name: string | null
@@ -15,6 +16,15 @@ import { User } from 'firebase/auth'
 //   password: string
 //   role: 'admin' | 'anonymous'
 // }
+
+type StoreApp = {
+  user: User | null
+  toast: IToast | null
+  data: Media[] | undefined
+  isPending: boolean
+  refetch: () => Promise<unknown>
+  first: string
+}
 
 type IToast = {
   text: string

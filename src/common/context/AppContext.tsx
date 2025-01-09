@@ -10,26 +10,30 @@ import {
 } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { User } from 'firebase/auth'
-import { IToast } from '@/src/types/admin'
+import { StoreApp } from '@/src/types/admin'
 import Toast from '@/src/components/ui/Toast'
-
-type StoreApp = {
-  user: User | null
-  toast: IToast | null
-}
+import useFullMedias from '../hooks/useFullMedias'
 
 const AppContext = createContext<
   [StoreApp, Dispatch<SetStateAction<StoreApp>>] | null
 >(null)
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
+  const { data, isPending, refetch } = useFullMedias()
   const toastRef = useRef<any>()
   const [storeApp, setStoreApp] = useState<StoreApp>({
     user: null,
     toast: null,
+    data: data,
+    isPending: isPending,
+    refetch: refetch,
+    first: '',
   })
-  const getIsSignin = async () => {
+
+  const getApp = async () => {
     try {
+      const res = await AsyncStorage.getItem('app')
+      setStoreApp({ ...storeApp, first: res ?? '' })
       const jsonValue = await AsyncStorage.getItem('user')
       const user: User | null = jsonValue != null ? JSON.parse(jsonValue) : null
       if (user !== null) setStoreApp({ ...storeApp, user })
@@ -39,8 +43,12 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffect(() => {
-    getIsSignin()
+    getApp()
   }, [])
+
+  useEffect(() => {
+    setStoreApp({ ...storeApp, data, isPending, refetch })
+  }, [isPending, data, refetch])
 
   useEffect(() => {
     if (storeApp.toast !== null)

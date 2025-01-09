@@ -19,8 +19,8 @@ import { format } from 'date-fns'
 import { difference } from 'lodash-es'
 import getVideoId from 'get-video-id'
 
+import { useApp } from '../common/context/AppContext'
 import useThemeApp from '../common/hooks/useThemeApp'
-import useFullMedias from '../common/hooks/useFullMedias'
 import useRefreshByUser from '../common/hooks/useRefreshByUser'
 import { SPACE } from '../common/constants/constants'
 import { numberFormat } from '../common/utils/utils'
@@ -56,7 +56,8 @@ const WatchingScreen: FC<Props> = ({ item }) => {
 
   if (item.isMedia) {
     const { mediaId } = item
-    const { data, isPending, refetch } = useFullMedias()
+    const [storeApp] = useApp()
+    const { data, isPending, refetch } = storeApp
     const media = [...new Set([...(data! ?? [])])].find((item) =>
       mediaId.includes(item.id)
     ) as Media
@@ -112,7 +113,7 @@ const WatchingScreen: FC<Props> = ({ item }) => {
             width: '100%',
             height: '100%',
             paddingTop: insets.top,
-            paddingBottom: insets.bottom + SPACE,
+            paddingBottom: insets.bottom,
             paddingLeft: insets.left,
             paddingRight: insets.right,
           },

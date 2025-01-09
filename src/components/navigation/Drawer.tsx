@@ -50,6 +50,7 @@ const Drawer: FC<Props> = ({ active }) => {
           try {
             await AsyncStorage.removeItem('user')
             setStoreApp({
+              ...storeApp,
               user: null,
               toast: {
                 type: 'success',

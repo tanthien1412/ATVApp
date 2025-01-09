@@ -15,7 +15,8 @@ import { useTranslation } from 'react-i18next'
 
 import { Media } from '../types/media'
 import useThemeApp from '../common/hooks/useThemeApp'
-import useFullMedias from '../common/hooks/useFullMedias'
+import { useApp } from '../common/context/AppContext'
+
 import { blurhash, SPACE } from '../common/constants/constants'
 
 import CircularLoading from '../components/ui/CircularLoading'
@@ -28,7 +29,8 @@ const AboutUsScreen: FC = () => {
   const { width } = useWindowDimensions()
   const { t } = useTranslation()
 
-  const { data, isPending } = useFullMedias()
+  const [storeApp] = useApp()
+  const { data, isPending, refetch } = storeApp
   const media = [...new Set([...(data! ?? [])])].find(
     (item) => item?.thread === 'aboutUs'
   ) as Media
@@ -41,7 +43,7 @@ const AboutUsScreen: FC = () => {
         styles.container,
         {
           paddingTop: insets.top,
-          paddingBottom: insets.bottom + SPACE,
+          paddingBottom: insets.bottom,
           paddingLeft: insets.left,
           paddingRight: insets.right,
         },

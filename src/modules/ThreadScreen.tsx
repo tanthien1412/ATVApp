@@ -20,12 +20,12 @@ import { useTranslation } from 'react-i18next'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { difference } from 'lodash-es'
 
-import { Media, Thread } from '../types/media'
 import useThemeApp from '../common/hooks/useThemeApp'
-import useFullMedias from '../common/hooks/useFullMedias'
-import { SPACE, ThreadMobile } from '../common/constants/constants'
+import { useApp } from '../common/context/AppContext'
 import useRefreshByUser from '../common/hooks/useRefreshByUser'
 import useRefreshOnFocus from '../common/hooks/useRefreshOnFocus'
+import { Media, Thread } from '../types/media'
+import { SPACE, ThreadMobile } from '../common/constants/constants'
 import { findThreadCurrent } from '../common/utils/utils'
 
 import Drawer from '../components/navigation/Drawer'
@@ -49,7 +49,8 @@ const ThreadScreen: FC<Props> = ({ thread }) => {
   const { t } = useTranslation()
   const TAB_BAR_HEIGHT = 60
 
-  const { data, isPending, refetch } = useFullMedias()
+  const [storeApp] = useApp()
+  const { data, isPending, refetch } = storeApp
 
   const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch)
   useRefreshOnFocus(refetch)
