@@ -1,0 +1,81 @@
+{
+  "expo": {
+    "name": "Truyền Hình Nông Nghiệp VN",
+    "slug": "AgriculturalTV",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "requireFullScreen": true,
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "This app uses the microphone."
+      },
+      "entitlements": {
+        "com.apple.developer.networking.wifi-info": true
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+      ],
+      "package": "com.tanthien1412.AgriculturalTV"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash.png",
+          "imageWidth": "100%"
+        }
+      ],
+      "expo-localization",
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "PORTRAIT_UP"
+        }
+      ],
+      [
+        "expo-video",
+        {
+          "supportsBackgroundPlayback": true,
+          "supportsPictureInPicture": true
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "packagerOpts": {
+      "config": "metro.config.js"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "498bfb47-ff23-4ac8-b741-4e5c74101c00"
+      }
+    },
+    "owner": "tanthien1412"
+  }
+}
