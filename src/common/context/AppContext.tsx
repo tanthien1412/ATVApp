@@ -27,13 +27,10 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     data: data,
     isPending: isPending,
     refetch: refetch,
-    first: '',
   })
 
   const getApp = async () => {
     try {
-      const res = await AsyncStorage.getItem('app')
-      setStoreApp({ ...storeApp, first: res ?? '' })
       const jsonValue = await AsyncStorage.getItem('user')
       const user: User | null = jsonValue != null ? JSON.parse(jsonValue) : null
       if (user !== null) setStoreApp({ ...storeApp, user })

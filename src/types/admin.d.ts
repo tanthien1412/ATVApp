@@ -23,7 +23,6 @@ type StoreApp = {
   data: Media[] | undefined
   isPending: boolean
   refetch: () => Promise<unknown>
-  first: string
 }
 
 type IToast = {

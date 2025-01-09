@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useFonts } from 'expo-font'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
@@ -8,19 +8,27 @@ import { useApp } from '../common/context/AppContext'
 import OnboardingScreen from './OnboardingScreen'
 
 const RootApp = () => {
-  const [storeApp, setStoreApp] = useApp()
-  const { isPending, first } = storeApp
+  const [storeApp] = useApp()
+  const { isPending } = storeApp
 
   const [loaded] = useFonts({
     SpaceMono: require('@/assets/fonts/SpaceMono-Regular.ttf'),
   })
 
+  const [first, setFirst] = useState<string>('')
+
   const onStart = async () => {
     await AsyncStorage.setItem('app', 'home')
-    setStoreApp({ ...storeApp, first: 'home' })
+    setFirst('home')
+  }
+
+  const getFirst = async () => {
+    const res = await AsyncStorage.getItem('app')
+    setFirst(res ?? '')
   }
 
   useEffect(() => {
+    getFirst()
     if (loaded && !isPending) {
       SplashScreen.hideAsync()
     }
