@@ -16,7 +16,8 @@
       },
       "entitlements": {
         "com.apple.developer.networking.wifi-info": true
-      }
+      },
+      "bundleIdentifier": "com.tanthien1412.AgriculturalTV"
     },
     "android": {
       "adaptiveIcon": {
