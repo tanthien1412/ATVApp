@@ -12,7 +12,8 @@
       "requireFullScreen": true,
       "supportsTablet": true,
       "infoPlist": {
-        "NSMicrophoneUsageDescription": "This app uses the microphone."
+        "NSMicrophoneUsageDescription": "This app uses the microphone.",
+        "ITSAppUsesNonExemptEncryption": false
       },
       "entitlements": {
         "com.apple.developer.networking.wifi-info": true
