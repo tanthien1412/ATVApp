@@ -22,6 +22,7 @@ import { blurhash, SPACE } from '../common/constants/constants'
 import CircularLoading from '../components/ui/CircularLoading'
 import HeaderBar from '../components/header/HeaderBar'
 import MediaPlayer from '../components/media/MediaPlayer'
+import useBlogger from '../common/hooks/useBlogger'
 
 const AboutUsScreen: FC = () => {
   const insets = useSafeAreaInsets()
@@ -30,10 +31,12 @@ const AboutUsScreen: FC = () => {
   const { t } = useTranslation()
 
   const [storeApp] = useApp()
-  const { data, isPending, refetch } = storeApp
+  const { data, isPending } = storeApp
   const media = [...new Set([...(data! ?? [])])].find(
     (item) => item?.thread === 'aboutUs'
   ) as Media
+
+  const { data: blogger, isPending: isLoading } = useBlogger(media?.post)
 
   return isPending ? (
     <CircularLoading />
@@ -103,16 +106,20 @@ const AboutUsScreen: FC = () => {
               {t('slogan_sub')}
             </Text>
           </View>
-          <RenderHtml
-            source={{ html: media?.post }}
-            contentWidth={width}
-            enableExperimentalMarginCollapsing={true}
-            renderersProps={{
-              img: {
-                enableExperimentalPercentWidth: true,
-              },
-            }}
-          />
+          {isLoading ? (
+            <CircularLoading />
+          ) : blogger === null ? null : (
+            <RenderHtml
+              source={{ html: blogger?.content }}
+              contentWidth={width}
+              enableExperimentalMarginCollapsing={true}
+              renderersProps={{
+                img: {
+                  enableExperimentalPercentWidth: true,
+                },
+              }}
+            />
+          )}
         </Animated.View>
       </ScrollView>
     </View>

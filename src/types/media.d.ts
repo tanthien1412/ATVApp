@@ -1,18 +1,17 @@
-import { PlaybackStates } from '@/src/common/constants/enums'
-
 export type Media = {
-  id: string
+  thumbnail: string
+  _id: string
   title: string
   tagline: string
   overview: string
   genres: string[]
   view_count: number
-  release_date: number
+  release_date: string
   thread: Thread
   region: string
   subRegion: string
   province: string
-  vr: string[]
+  vr: string
   video: string
   post: string
 }
@@ -23,6 +22,7 @@ export type Thread =
   | 'livestream'
   | 'youtube'
   | 'article'
+  | 'expert'
   | 'aboutUs'
 
 export type MediaState = {

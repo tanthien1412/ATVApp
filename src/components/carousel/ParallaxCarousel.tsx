@@ -10,7 +10,6 @@ import ItemHero from '../items/ItemHero'
 
 type Props = {
   data: Media[]
-
   width: number
   aspectRatio: number
   autoPlay?: boolean
@@ -20,7 +19,6 @@ type Props = {
 
 const ParallaxCarousel: FC<Props> = ({
   data,
-
   width,
   aspectRatio,
   autoPlay = false,
@@ -64,7 +62,7 @@ const ParallaxCarousel: FC<Props> = ({
           parallaxScrollingOffset: SPACE * 3,
         }}
         data={data}
-        renderItem={({ item }) => <ItemHero key={item.id} media={item} />}
+        renderItem={({ item }) => <ItemHero key={item._id} media={item} />}
       />
       {!!progressValue && (
         <PaginationDot

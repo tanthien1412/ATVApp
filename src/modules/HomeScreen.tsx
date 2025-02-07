@@ -82,9 +82,7 @@ const HomeScreen: FC = () => {
 
   const expertData = [
     ...new Set(
-      [...(data! ?? [])]?.filter((item: Media) =>
-        item.genres?.includes('Expert')
-      )
+      [...(data! ?? [])]?.filter((item: Media) => item.thread === 'expert')
     ),
   ]
 
@@ -172,9 +170,9 @@ const HomeScreen: FC = () => {
                 data={articleData.slice(1, 5)}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ gap: SPACE }}
-                keyExtractor={(item: Media) => item.id}
+                keyExtractor={(item: Media) => item._id}
                 renderItem={({ item }) => (
-                  <ItemSub key={item.id} media={item} />
+                  <ItemSub key={item._id} media={item} />
                 )}
                 scrollEnabled={false}
                 initialNumToRender={5}
@@ -182,11 +180,11 @@ const HomeScreen: FC = () => {
               <FlashList
                 data={articleData.slice(1, 5)}
                 renderItem={({ item }) => (
-                  <ItemSub key={item.id} media={item} />
+                  <ItemSub key={item._id} media={item} />
                 )}
                 estimatedItemSize={itemHeight}
-                getItemType={(item) => typeof item.id}
-                keyExtractor={(item: Media) => item.id}
+                getItemType={(item) => typeof item._id}
+                keyExtractor={(item: Media) => item._id}
                 scrollEnabled={false}
                 showsVerticalScrollIndicator={false}
                 // contentContainerStyle={{ gap: SPACE }}
@@ -212,9 +210,9 @@ const HomeScreen: FC = () => {
                 data={localData.slice(0, 5)}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ gap: SPACE }}
-                keyExtractor={(item: Media) => item.id}
+                keyExtractor={(item: Media) => item._id}
                 renderItem={({ item }) => (
-                  <ItemOnly key={item.id} media={i />
+                  <ItemOnly key={item._id} media={i />
                 )}
                 scrollEnabled={false}
                 initialNumToRender={5}
@@ -222,11 +220,11 @@ const HomeScreen: FC = () => {
               <FlashList
                 data={localData.slice(1, 5)}
                 renderItem={({ item }) => (
-                  <ItemSub key={item.id} media={item} />
+                  <ItemSub key={item._id} media={item} />
                 )}
                 estimatedItemSize={itemHeight}
-                getItemType={(item) => typeof item.id}
-                keyExtractor={(item: Media) => item.id}
+                getItemType={(item) => typeof item._id}
+                keyExtractor={(item: Media) => item._id}
                 scrollEnabled={false}
                 showsVerticalScrollIndicator={false}
               />

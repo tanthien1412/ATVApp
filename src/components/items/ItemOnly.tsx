@@ -1,10 +1,8 @@
 import { FC, memo } from 'react'
 import { View, Pressable } from 'react-native'
 import { router } from 'expo-router'
-import { format } from 'date-fns'
 
 import { Media } from '@/src/types/media'
-import { baseImgUrl } from '@/src/common/config/config'
 import { SPACE } from '@/src/common/constants/constants'
 import ImagePlay from '../media/ImagePlay'
 import ContentText from '../media/ContentText'
@@ -14,8 +12,9 @@ type Props = {
 }
 
 const ItemOnly: FC<Props> = ({ media }) => {
-  const isVr = media?.vr?.length > 0
-  const srcImg = !isVr ? `${baseImgUrl}${media?.id}` : `${media?.vr[0]}`
+  const srcImg = media?.thumbnail
+    ? media?.thumbnail
+    : require('@/assets/images/no_image.png')
 
   return (
     <View>
@@ -29,7 +28,7 @@ const ItemOnly: FC<Props> = ({ media }) => {
         onPress={() =>
           router.navigate({
             pathname: '/[mediaId]',
-            params: { mediaId: media.id },
+            params: { mediaId: media._id },
           })
         }
       >
@@ -39,7 +38,7 @@ const ItemOnly: FC<Props> = ({ media }) => {
         <View style={{ width: '45%' }}>
           <ContentText
             title={media?.title}
-            date={format(media?.release_date, 'dd-MM-yyyy')}
+            date={media?.release_date?.replace(/[/]/g, '-')}
             view={media?.view_count}
           />
         </View>
@@ -50,5 +49,5 @@ const ItemOnly: FC<Props> = ({ media }) => {
 
 export default memo(
   ItemOnly,
-  (prevProps, nextProps) => prevProps?.media?.id === nextProps?.media?.id
+  (prevProps, nextProps) => prevProps?.media?._id === nextProps?.media?._id
 )

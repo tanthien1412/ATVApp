@@ -15,7 +15,6 @@ import YoutubePlayer from 'react-native-youtube-iframe'
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useTranslation } from 'react-i18next'
-import { format } from 'date-fns'
 import { difference } from 'lodash-es'
 import getVideoId from 'get-video-id'
 
@@ -32,6 +31,7 @@ import HeaderBar from '../components/header/HeaderBar'
 import ButtonUI from '../components/ui/ButtonUI'
 import MediaPlayer from '../components/media/MediaPlayer'
 import CircularLoading from '../components/ui/CircularLoading'
+import useBlogger from '../common/hooks/useBlogger'
 
 type WatchingMedia = {
   isMedia: true
@@ -59,16 +59,18 @@ const WatchingScreen: FC<Props> = ({ item }) => {
     const [storeApp] = useApp()
     const { data, isPending, refetch } = storeApp
     const media = [...new Set([...(data! ?? [])])].find((item) =>
-      mediaId.includes(item.id)
+      mediaId.includes(item._id)
     ) as Media
 
     const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch)
 
-    const isVr = media?.vr?.length > 0
+    const { data: blogger, isPending: isLoading } = useBlogger(media?.post)
+
+    const isVr = Boolean(media?.vr)
 
     const iframeVr = `
     <iframe
-      src="${media?.vr[1]}"
+      src="${media?.vr}"
       width="100%"
       height="100%"
       allowfullscreen="true"
@@ -188,7 +190,7 @@ const WatchingScreen: FC<Props> = ({ item }) => {
                     flex: 1,
                   }}
                 >
-                  {media?.province}, {format(media?.release_date, 'dd-MM-yyyy')}
+                  {media?.province}, {media?.release_date?.replace(/[/]/g, '-')}
                 </Text>
                 <ButtonUI
                   startIcon={true}
@@ -201,26 +203,31 @@ const WatchingScreen: FC<Props> = ({ item }) => {
               </View>
             </View>
 
-            <RenderHtml
-              source={{ html: media?.post }}
-              contentWidth={width}
-              enableExperimentalMarginCollapsing={true}
-              renderersProps={{
-                img: {
-                  enableExperimentalPercentWidth: true,
-                },
-              }}
-            />
+            {isLoading ? (
+              <CircularLoading />
+            ) : blogger === null ? null : (
+              <RenderHtml
+                source={{ html: blogger?.content }}
+                contentWidth={width}
+                enableExperimentalMarginCollapsing={true}
+                renderersProps={{
+                  img: {
+                    enableExperimentalPercentWidth: true,
+                  },
+                }}
+              />
+            )}
+
             <View style={{ gap: SPACE * 1.5, height: 'auto' }}>
               <Heading title={t('title_related')} />
               <FlashList
                 data={relatedData.slice(0, Math.min(3, relatedData.length))}
                 renderItem={({ item }) => (
-                  <ItemOnly key={item.id} media={item} />
+                  <ItemOnly key={item._id} media={item} />
                 )}
                 estimatedItemSize={itemHeight}
-                getItemType={(item) => typeof item.id}
-                keyExtractor={(item: Media) => item.id}
+                getItemType={(item) => typeof item._id}
+                keyExtractor={(item: Media) => item._id}
                 scrollEnabled={false}
                 showsVerticalScrollIndicator={false}
               />

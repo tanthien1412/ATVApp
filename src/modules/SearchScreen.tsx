@@ -145,11 +145,11 @@ const SearchScreen: FC = () => {
                 <FlashList
                   data={pagiData}
                   renderItem={({ item }) => (
-                    <ItemSub key={item.id} media={item} />
+                    <ItemSub key={item._id} media={item} />
                   )}
                   estimatedItemSize={itemHeight}
-                  getItemType={(item) => typeof item.id}
-                  keyExtractor={(item: Media) => item.id}
+                  getItemType={(item) => typeof item._id}
+                  keyExtractor={(item: Media) => item._id}
                   scrollEnabled={false}
                   showsVerticalScrollIndicator={false}
                 />

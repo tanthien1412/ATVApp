@@ -3,7 +3,6 @@ import { Pressable } from 'react-native'
 import { router } from 'expo-router'
 
 import { Media } from '@/src/types/media'
-import { baseImgUrl } from '@/src/common/config/config'
 import { SPACE } from '@/src/common/constants/constants'
 
 import ImagePlay from '../media/ImagePlay'
@@ -13,8 +12,9 @@ type Props = {
 }
 
 const ItemHero: FC<Props> = ({ media }) => {
-  const isVr = media?.vr?.length > 0
-  const srcImg = !isVr ? `${baseImgUrl}${media?.id}` : `${media?.vr[0]}`
+  const srcImg = media?.thumbnail
+    ? media?.thumbnail
+    : require('@/assets/images/no_image.png')
 
   return (
     <Pressable
@@ -22,7 +22,7 @@ const ItemHero: FC<Props> = ({ media }) => {
       onPress={() =>
         router.navigate({
           pathname: '/[mediaId]',
-          params: { mediaId: media.id },
+          params: { mediaId: media._id },
         })
       }
     >
@@ -38,5 +38,5 @@ const ItemHero: FC<Props> = ({ media }) => {
 
 export default memo(
   ItemHero,
-  (prevProps, nextProps) => prevProps?.media?.id === nextProps?.media?.id
+  (prevProps, nextProps) => prevProps?.media?._id === nextProps?.media?._id
 )

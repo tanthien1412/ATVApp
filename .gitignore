@@ -30,6 +30,7 @@ yarn-error.*
 *.pem
 
 # local env files
+.env*
 .env*.local
 
 # typescript
@@ -40,4 +41,9 @@ app-example
 /android
 /ios
 
-.vscode
+#vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

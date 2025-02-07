@@ -88,7 +88,9 @@ const ThreadScreen: FC<Props> = ({ thread }) => {
   const lastestData = [
     ...new Set(
       [...articleData]?.sort(
-        (a: Media, b: Media) => b?.release_date - a?.release_date
+        (a: Media, b: Media) =>
+          new Date(b?.release_date).getTime() -
+          new Date(a?.release_date).getTime()
       )
     ),
   ].slice(0, 4)
@@ -150,7 +152,7 @@ const ThreadScreen: FC<Props> = ({ thread }) => {
         ]}
       >
         <HeaderBar
-          title={t(findThreadCurrent('Article', ThreadMobile)?.label)}
+          title={t(findThreadCurrent(thread, ThreadMobile)?.label)}
           actionStart="menu"
           actionEnd="search"
           active={active}
@@ -178,11 +180,11 @@ const ThreadScreen: FC<Props> = ({ thread }) => {
               <FlashList
                 data={lastestData.slice(1, 4)}
                 renderItem={({ item }) => (
-                  <ItemSub key={item.id} media={item} />
+                  <ItemSub key={item._id} media={item} />
                 )}
                 estimatedItemSize={itemHeight}
-                getItemType={(item) => typeof item.id}
-                keyExtractor={(item: Media) => item.id}
+                getItemType={(item) => typeof item._id}
+                keyExtractor={(item: Media) => item._id}
                 scrollEnabled={false}
                 showsVerticalScrollIndicator={false}
               />
@@ -194,9 +196,9 @@ const ThreadScreen: FC<Props> = ({ thread }) => {
                 {/* <FlatList
                   data={pagiData}
                   renderItem={({ item }) => (
-                    <ItemSub key={item.id} media={item} />
+                    <ItemSub key={item._id} media={item} />
                   )}
-                  keyExtractor={(item: Media) => item.id}
+                  keyExtractor={(item: Media) => item._id}
                   showsVerticalScrollIndicator={false}
                   contentContainerStyle={{ gap: SPACE }}
                   scrollEnabled={false}
@@ -221,11 +223,11 @@ const ThreadScreen: FC<Props> = ({ thread }) => {
                 <FlashList
                   data={pagiData}
                   renderItem={({ item }) => (
-                    <ItemSub key={item.id} media={item} />
+                    <ItemSub key={item._id} media={item} />
                   )}
                   estimatedItemSize={itemHeight}
-                  getItemType={(item) => typeof item.id}
-                  keyExtractor={(item: Media) => item.id}
+                  getItemType={(item) => typeof item._id}
+                  keyExtractor={(item: Media) => item._id}
                   scrollEnabled={false}
                   showsVerticalScrollIndicator={false}
                 />

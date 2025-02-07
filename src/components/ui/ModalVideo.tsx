@@ -14,7 +14,7 @@ const ModalVideo: FC<Props> = ({}) => {
   const theme = useThemeApp()
   const [modalVisible, setModalVisible] = useState<boolean>(true)
   const player = useVideoPlayer(
-    require('@/assets/hny_mobile.mp4'),
+    'https://storage.googleapis.com/video-thnn/HPNY/hny_mobile.mp4',
     (player) => {
       player.play()
     }
