@@ -243,7 +243,7 @@ const HomeScreen: FC = () => {
           </View>
         </ScrollView>
         <Overlay active={active} />
-        <ModalVideo />
+        {/* <ModalVideo /> */}
       </Animated.View>
     </Fragment>
   )
