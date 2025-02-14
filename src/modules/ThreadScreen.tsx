@@ -26,7 +26,7 @@ import useRefreshByUser from '../common/hooks/useRefreshByUser'
 import useRefreshOnFocus from '../common/hooks/useRefreshOnFocus'
 import { Media, Thread } from '../types/media'
 import { SPACE, ThreadMobile } from '../common/constants/constants'
-import { findThreadCurrent } from '../common/utils/utils'
+import { findThreadCurrent, splitStringDate } from '../common/utils/utils'
 
 import Drawer from '../components/navigation/Drawer'
 import HeaderBar from '../components/header/HeaderBar'
@@ -79,21 +79,21 @@ const ThreadScreen: FC<Props> = ({ thread }) => {
     }
   })
 
-  const articleData = [
+  const sortData = [
     ...new Set(
-      [...(data! ?? [])]?.filter((item: Media) => item.thread === thread)
+      [...(data! ?? [])]?.sort(
+        (a: Media, b: Media) =>
+          splitStringDate(b?.release_date).getTime() -
+          splitStringDate(a?.release_date).getTime()
+      )
     ),
   ]
 
-  const lastestData = [
-    ...new Set(
-      [...articleData]?.sort(
-        (a: Media, b: Media) =>
-          new Date(b?.release_date).getTime() -
-          new Date(a?.release_date).getTime()
-      )
-    ),
-  ].slice(0, 4)
+  const articleData = [
+    ...new Set([...sortData]?.filter((item: Media) => item.thread === thread)),
+  ]
+
+  const lastestData = [...new Set([...articleData]?.slice(0, 4))]
 
   const generalData = difference(articleData, lastestData)
 

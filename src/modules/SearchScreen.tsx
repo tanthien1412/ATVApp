@@ -20,7 +20,7 @@ import useRefreshOnFocus from '../common/hooks/useRefreshOnFocus'
 import { useApp } from '../common/context/AppContext'
 import { Media } from '../types/media'
 import { SPACE } from '../common/constants/constants'
-import { opacityToHex } from '../common/utils/utils'
+import { opacityToHex, splitStringDate } from '../common/utils/utils'
 
 import HeaderBar from '../components/header/HeaderBar'
 import InputStyled from '../components/ui/InputStyled'
@@ -47,9 +47,19 @@ const SearchScreen: FC = () => {
   const [textSearch, setTextSearch] = useState<string>('')
   const [isTurn, setIsTurn] = useState<boolean>(true)
 
+  const sortData = [
+    ...new Set(
+      [...(data! ?? [])]?.sort(
+        (a: Media, b: Media) =>
+          splitStringDate(b?.release_date).getTime() -
+          splitStringDate(a?.release_date).getTime()
+      )
+    ),
+  ]
+
   const searchData = [
     ...new Set(
-      [...(data! ?? [])]?.filter(
+      [...sortData]?.filter(
         (item) =>
           item.title?.toLowerCase().includes(query?.toLowerCase()) ||
           item.overview?.toLowerCase().includes(query?.toLowerCase()) ||

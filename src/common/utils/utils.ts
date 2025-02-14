@@ -54,3 +54,11 @@ export const validateEmail = (email: string) => {
       /^(([^<>()[\]\\.,;:\s@\\"]+(\.[^<>()[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     )
 }
+
+export const splitStringDate = (date: string) => {
+  const length = date.length
+  const year = date.slice(length - 4)
+  const month = date.slice(3, 5)
+  const day = date.slice(0, 2)
+  return new Date(+year, +month - 1, +day)
+}

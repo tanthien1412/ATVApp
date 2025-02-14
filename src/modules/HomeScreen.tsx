@@ -29,7 +29,11 @@ import useRefreshOnFocus from '../common/hooks/useRefreshOnFocus'
 import { Media } from '../types/media'
 import { useApp } from '../common/context/AppContext'
 import { blurhash, SPACE, ThreadMobile } from '../common/constants/constants'
-import { findThreadCurrent, opacityToHex } from '../common/utils/utils'
+import {
+  findThreadCurrent,
+  opacityToHex,
+  splitStringDate,
+} from '../common/utils/utils'
 
 import Drawer from '../components/navigation/Drawer'
 import HeaderBar from '../components/header/HeaderBar'
@@ -80,13 +84,23 @@ const HomeScreen: FC = () => {
     }
   })
 
-  const expertData = [
+  const sortData = [
     ...new Set(
-      [...(data! ?? [])]?.filter((item: Media) => item.thread === 'expert')
+      [...(data! ?? [])]?.sort(
+        (a: Media, b: Media) =>
+          splitStringDate(b?.release_date).getTime() -
+          splitStringDate(a?.release_date).getTime()
+      )
     ),
   ]
 
-  const filterData = difference(data!, expertData)
+  const expertData = [
+    ...new Set(
+      [...sortData]?.filter((item: Media) => item.thread === 'expert')
+    ),
+  ]
+
+  const filterData = difference(sortData, expertData)
 
   const articleData = [
     ...new Set(

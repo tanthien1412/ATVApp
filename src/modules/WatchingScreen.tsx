@@ -22,7 +22,7 @@ import { useApp } from '../common/context/AppContext'
 import useThemeApp from '../common/hooks/useThemeApp'
 import useRefreshByUser from '../common/hooks/useRefreshByUser'
 import { SPACE } from '../common/constants/constants'
-import { numberFormat } from '../common/utils/utils'
+import { numberFormat, splitStringDate } from '../common/utils/utils'
 import { Media } from '../types/media'
 
 import Heading from '../components/header/Heading'
@@ -58,7 +58,17 @@ const WatchingScreen: FC<Props> = ({ item }) => {
     const { mediaId } = item
     const [storeApp] = useApp()
     const { data, isPending, refetch } = storeApp
-    const media = [...new Set([...(data! ?? [])])].find((item) =>
+    const sortData = [
+      ...new Set(
+        [...(data! ?? [])]?.sort(
+          (a: Media, b: Media) =>
+            splitStringDate(b?.release_date).getTime() -
+            splitStringDate(a?.release_date).getTime()
+        )
+      ),
+    ]
+
+    const media = [...new Set([...sortData])].find((item) =>
       mediaId.includes(item._id)
     ) as Media
 
@@ -79,7 +89,7 @@ const WatchingScreen: FC<Props> = ({ item }) => {
     ></iframe>
     `
 
-    const filterData = difference(data!, [media])
+    const filterData = difference(sortData, [media])
 
     const threadData = [
       ...new Set(
