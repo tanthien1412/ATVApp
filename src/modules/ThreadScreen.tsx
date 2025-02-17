@@ -89,13 +89,13 @@ const ThreadScreen: FC<Props> = ({ thread }) => {
     ),
   ]
 
-  const articleData = [
+  const threadData = [
     ...new Set([...sortData]?.filter((item: Media) => item.thread === thread)),
   ]
 
-  const lastestData = [...new Set([...articleData]?.slice(0, 4))]
+  const lastestData = [...new Set([...threadData]?.slice(0, 4))]
 
-  const generalData = difference(articleData, lastestData)
+  const generalData = difference(threadData, lastestData)
 
   const [page, setPage] = useState(1)
   const itemsPerPage = 5
