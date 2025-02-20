@@ -267,7 +267,7 @@ const WatchingScreen: FC<Props> = ({ item }) => {
         <HeaderBar title={'Youtube'} actionStart="back" actionEnd="search" />
         <View style={styles.videoContainer}>
           <YoutubePlayer
-            height={width * (14 / 9)}
+            height={width * (16 / 9)}
             videoId={id}
             // muted
           />
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'honeydew',
   },
 
-  videoContainer: { width: '100%', aspectRatio: 14 / 9, marginBottom: SPACE },
+  videoContainer: { width: '100%', aspectRatio: 16 / 9, marginBottom: SPACE },
   // videoFullscreen: { width: '100%', height: '100%' },
   subContainer: { paddingHorizontal: SPACE },
 })
