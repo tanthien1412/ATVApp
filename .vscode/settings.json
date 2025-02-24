@@ -15,5 +15,5 @@
   "editor.formatOnSave": true,
   "prettier.semi": false,
   "prettier.singleQuote": true,
-  "eslint.enable": false
+  "eslint.enable": true
 }

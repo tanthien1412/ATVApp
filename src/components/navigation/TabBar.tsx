@@ -39,21 +39,20 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
     height: isVisible.value,
   }))
 
-  const hideBar = () => {
-    isVisible.value = withTiming(0, {
-      duration: 500,
-      easing: Easing.inOut(Easing.ease),
-    })
-  }
-
-  const showBar = () => {
-    isVisible.value = withTiming(TAB_BAR_HEIGHT, {
-      duration: 500,
-      easing: Easing.inOut(Easing.ease),
-    })
-  }
-
   useLayoutEffect(() => {
+    const hideBar = () => {
+      isVisible.value = withTiming(0, {
+        duration: 500,
+        easing: Easing.inOut(Easing.ease),
+      })
+    }
+
+    const showBar = () => {
+      isVisible.value = withTiming(TAB_BAR_HEIGHT, {
+        duration: 500,
+        easing: Easing.inOut(Easing.ease),
+      })
+    }
     const showSubscription = Keyboard.addListener('keyboardDidShow', hideBar)
     const hideSubscription = Keyboard.addListener('keyboardDidHide', showBar)
 
@@ -61,7 +60,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
       showSubscription.remove()
       hideSubscription.remove()
     }
-  }, [])
+  }, [isVisible])
 
   return (
     <Animated.View

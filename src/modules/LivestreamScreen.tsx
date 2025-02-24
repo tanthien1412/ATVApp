@@ -100,8 +100,8 @@ const LivestreamScreen: FC = () => {
         viewableItems,
         changed,
       }: {
-        viewableItems: Array<ViewToken>
-        changed: Array<ViewToken>
+        viewableItems: ViewToken[]
+        changed: ViewToken[]
       }) => {
         changed.forEach((changedItem) => {
           if (changedItem?.isViewable) {
@@ -230,6 +230,15 @@ const LivestreamScreen: FC = () => {
           </View>
         </ScrollView>
         <Overlay active={active} />
+        <ModalInput
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          value={value}
+          setValue={setValue}
+          server={server}
+          setServer={setServer}
+          onSend={handleSend}
+        />
         {user && !isAnonymous && !modalVisible && (
           <FloatAction
             first={() => {
@@ -243,15 +252,6 @@ const LivestreamScreen: FC = () => {
             // third={handleLiveStream}
           />
         )}
-        <ModalInput
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          value={value}
-          setValue={setValue}
-          server={server}
-          setServer={setServer}
-          onSend={handleSend}
-        />
       </Animated.View>
     </Fragment>
   )

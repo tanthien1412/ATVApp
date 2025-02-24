@@ -53,29 +53,32 @@ const WatchingScreen: FC<Props> = ({ item }) => {
   const theme = useThemeApp()
   const scrollRef = useRef<ScrollView>(null)
   const { t } = useTranslation()
+  const [storeApp] = useApp()
+  const { data, isPending, refetch } = storeApp
+  const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch)
+  const sortData = [
+    ...new Set(
+      [...(data! ?? [])]?.sort(
+        (a: Media, b: Media) =>
+          splitStringDate(b?.release_date).getTime() -
+          splitStringDate(a?.release_date).getTime()
+      )
+    ),
+  ]
+
+  const mediaId = item.isMedia ? item.mediaId : item.youtubeId
+
+  const media = [...new Set([...sortData])].find((item) =>
+    mediaId.includes(item._id)
+  ) as Media
+
+  const { data: blogger, isPending: isLoading } = useBlogger(media?.post)
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ x: 0, y: 0, animated: true })
+  }, [mediaId])
 
   if (item.isMedia) {
-    const { mediaId } = item
-    const [storeApp] = useApp()
-    const { data, isPending, refetch } = storeApp
-    const sortData = [
-      ...new Set(
-        [...(data! ?? [])]?.sort(
-          (a: Media, b: Media) =>
-            splitStringDate(b?.release_date).getTime() -
-            splitStringDate(a?.release_date).getTime()
-        )
-      ),
-    ]
-
-    const media = [...new Set([...sortData])].find((item) =>
-      mediaId.includes(item._id)
-    ) as Media
-
-    const { isRefetchingByUser, refetchByUser } = useRefreshByUser(refetch)
-
-    const { data: blogger, isPending: isLoading } = useBlogger(media?.post)
-
     const isVr = Boolean(media?.vr)
 
     const iframeVr = `
@@ -110,10 +113,6 @@ const WatchingScreen: FC<Props> = ({ item }) => {
     const aspectRatio = 4 / 3
     const itemHeight = ((width - 2 * SPACE) * (50 / 100)) / aspectRatio
     // const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
-
-    useEffect(() => {
-      scrollRef.current?.scrollTo({ x: 0, y: 0, animated: true })
-    }, [mediaId])
 
     return isPending ? (
       <CircularLoading />

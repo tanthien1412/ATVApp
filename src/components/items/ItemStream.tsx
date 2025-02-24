@@ -81,7 +81,7 @@ const ItemStream: FC<Props> = ({ streamInfo, children }) => {
         true
       )
     )
-  }, [])
+  }, [heightF, heightS, heightT])
 
   return (
     <Pressable

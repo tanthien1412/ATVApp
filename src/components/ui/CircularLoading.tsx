@@ -1,9 +1,7 @@
 import React, { FC, memo } from 'react'
 import { ActivityIndicator, StyleSheet, View } from 'react-native'
 
-type Props = {}
-
-const CircularLoading: FC<Props> = () => {
+const CircularLoading: FC = () => {
   return (
     <View style={styles.container}>
       <ActivityIndicator size="large" color="#00ff00" />

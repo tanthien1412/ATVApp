@@ -92,11 +92,11 @@ const FloatAction: FC<Props> = ({ first, second }) => {
       width: secondWidth.value,
     }
   })
-  const thirdWidthStyle = useAnimatedStyle(() => {
-    return {
-      width: thirdWidth.value,
-    }
-  })
+  // const thirdWidthStyle = useAnimatedStyle(() => {
+  //   return {
+  //     width: thirdWidth.value,
+  //   }
+  // })
 
   const firstIcon = useAnimatedStyle(() => {
     const scale = interpolate(
@@ -126,19 +126,19 @@ const FloatAction: FC<Props> = ({ first, second }) => {
     }
   })
 
-  const thirdIcon = useAnimatedStyle(() => {
-    const scale = interpolate(
-      thirdValue.value,
-      [30, 220],
-      [0, 1],
-      Extrapolation.CLAMP
-    )
+  // const thirdIcon = useAnimatedStyle(() => {
+  //   const scale = interpolate(
+  //     thirdValue.value,
+  //     [30, 220],
+  //     [0, 1],
+  //     Extrapolation.CLAMP
+  //   )
 
-    return {
-      bottom: thirdValue.value,
-      transform: [{ scale: scale }],
-    }
-  })
+  //   return {
+  //     bottom: thirdValue.value,
+  //     transform: [{ scale: scale }],
+  //   }
+  // })
 
   const plusIcon = useAnimatedStyle(() => {
     return {
@@ -147,7 +147,7 @@ const FloatAction: FC<Props> = ({ first, second }) => {
   })
 
   return (
-    <View style={styles.container}>
+    <View>
       <AnimatedButton
         onPress={() => {
           first()
@@ -262,6 +262,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     flexDirection: 'row',
     alignItems: 'center',
+    overflow: 'hidden',
   },
   iconContainer: {
     width: SPACE * 3.5,

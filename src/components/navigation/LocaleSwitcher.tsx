@@ -25,7 +25,7 @@ const LocaleSwitcher: FC<Props> = ({ value, active }) => {
     })
   }
 
-  const isLanguage = currentLanguage == value
+  const isLanguage = currentLanguage === value
 
   useEffect(() => {
     const loadLanguage = async () => {

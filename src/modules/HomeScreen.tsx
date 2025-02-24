@@ -44,7 +44,7 @@ import ParallaxCarousel from '../components/carousel/ParallaxCarousel'
 import ItemMain from '../components/items/ItemMain'
 import ItemSub from '../components/items/ItemSub'
 import CircularLoading from '../components/ui/CircularLoading'
-import ModalVideo from '../components/ui/ModalVideo'
+// import ModalVideo from '../components/ui/ModalVideo'
 
 const HomeScreen: FC = () => {
   const { width } = useWindowDimensions()

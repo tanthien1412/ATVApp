@@ -20,7 +20,7 @@ const AnimatedIcon = Reanimated.createAnimatedComponent(MaterialIcons)
 const SwipeableRow: FC<Props> = ({ onDelete, children }) => {
   const ref = useRef<SwipeableMethods>(null)
 
-  const renderRightActions = (
+  const RenderRightActions = (
     prog: SharedValue<number>,
     drag: SharedValue<number>
   ) => {
@@ -29,6 +29,7 @@ const SwipeableRow: FC<Props> = ({ onDelete, children }) => {
         transform: [{ translateX: drag.value + 60 }],
       }
     })
+
     return (
       <Reanimated.View style={styleAnimation}>
         <RectButton style={styles.rightAction} onPress={close}>
@@ -50,7 +51,7 @@ const SwipeableRow: FC<Props> = ({ onDelete, children }) => {
       friction={2}
       rightThreshold={40}
       containerStyle={styles.swipeable}
-      renderRightActions={renderRightActions}
+      renderRightActions={RenderRightActions}
       enableTrackpadTwoFingerGesture
     >
       {children}

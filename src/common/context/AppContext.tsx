@@ -29,22 +29,22 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     refetch: refetch,
   })
 
-  const getApp = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('user')
-      const user: User | null = jsonValue != null ? JSON.parse(jsonValue) : null
-      if (user !== null) setStoreApp({ ...storeApp, user })
-      else await AsyncStorage.removeItem('user')
-    } finally {
-    }
-  }
-
   useEffect(() => {
+    const getApp = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem('user')
+        const user: User | null =
+          jsonValue != null ? JSON.parse(jsonValue) : null
+        if (user !== null) setStoreApp((prev) => ({ ...prev, user }))
+        else await AsyncStorage.removeItem('user')
+      } finally {
+      }
+    }
     getApp()
   }, [])
 
   useEffect(() => {
-    setStoreApp({ ...storeApp, data, isPending, refetch })
+    setStoreApp((prev) => ({ ...prev, data, isPending, refetch }))
   }, [isPending, data, refetch])
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         duration: storeApp.toast.duration,
       })
 
-    setStoreApp({ ...storeApp, toast: null })
+    setStoreApp((prev) => ({ ...prev, toast: null }))
   }, [storeApp.toast])
 
   return (

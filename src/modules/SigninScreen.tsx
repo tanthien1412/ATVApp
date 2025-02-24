@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import { StyleSheet, View, Pressable, Text } from 'react-native'
 import { Image } from 'expo-image'
@@ -130,11 +130,6 @@ const SigninScreen = () => {
         setSigninError({ ...signinError, eResponse: error.message })
       })
   }
-
-  useEffect(() => {
-    setAccountState(initSignin)
-    setSigninError(initError)
-  }, [])
 
   return (
     <View

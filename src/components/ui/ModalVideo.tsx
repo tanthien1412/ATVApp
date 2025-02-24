@@ -8,9 +8,7 @@ import { SPACE } from '@/src/common/constants/constants'
 
 import ButtonUI from './ButtonUI'
 
-type Props = {}
-
-const ModalVideo: FC<Props> = ({}) => {
+const ModalVideo: FC = () => {
   const theme = useThemeApp()
   const [modalVisible, setModalVisible] = useState<boolean>(true)
   const player = useVideoPlayer(

@@ -42,7 +42,7 @@ const ToastIcon: FC<PropsIcon> = ({ width, height, type }) => {
   }
 }
 
-const Toast = forwardRef(({}, ref) => {
+const Toast = forwardRef(function ToastRef(props, ref) {
   const { t } = useTranslation()
   const toastTopAnimation = useSharedValue(-100)
   const context = useSharedValue(0)

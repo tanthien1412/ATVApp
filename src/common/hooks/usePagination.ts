@@ -6,24 +6,23 @@ export const usePagination = (
   pagesToDisplay: number,
   currentPage: number
 ) => {
-  const [pagination, setPagination] = useState([] as Array<string>)
-
-  const getPagination = () => {
-    const totalPages = Math.ceil(totalItems / pageSize)
-    let newLimit = 1
-    if (totalPages > pagesToDisplay + 1) {
-      newLimit = calculateLowerLimit(totalPages, pagesToDisplay, currentPage)
-    }
-    const newPagination = calculatePagination(
-      pagesToDisplay,
-      currentPage,
-      newLimit,
-      totalPages
-    )
-    setPagination(newPagination)
-  }
+  const [pagination, setPagination] = useState([] as string[])
 
   useEffect(() => {
+    const getPagination = () => {
+      const totalPages = Math.ceil(totalItems / pageSize)
+      let newLimit = 1
+      if (totalPages > pagesToDisplay + 1) {
+        newLimit = calculateLowerLimit(totalPages, pagesToDisplay, currentPage)
+      }
+      const newPagination = calculatePagination(
+        pagesToDisplay,
+        currentPage,
+        newLimit,
+        totalPages
+      )
+      setPagination(newPagination)
+    }
     getPagination()
   }, [currentPage, totalItems, pagesToDisplay, pageSize])
 
@@ -86,7 +85,7 @@ const addPaginationUpperLimit = (
   currentPage: number,
   pagesToDisplay: number,
   totalPages: number,
-  pagination: Array<string>
+  pagination: string[]
 ) => {
   if (!(currentPage + Math.ceil(pagesToDisplay / 2) >= totalPages)) {
     pagination.push('...')
